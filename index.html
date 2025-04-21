@@ -1,95 +1,97 @@
-const generateQuestion = (type) => {
-  const a = Math.floor(Math.random() * 10) + 1;
-  const b = Math.floor(Math.random() * 10) + 1;
-  switch (type) {
-    case "addition":
-      return { question: `${a} + ${b}`, answer: a + b };
-    case "subtraction":
-      return { question: `${a} - ${b}`, answer: a - b };
-    case "multiplication":
-      return { question: `${a} × ${b}`, answer: a * b };
-    case "division":
-      return { question: `${a * b} ÷ ${b}`, answer: a };
-    default:
-      return { question: "", answer: 0 };
-  }
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MathWizz - Product Proposal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      color: #007bff;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    .highlight {
+      background-color: #e9ecef;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MathWizz - Class Product Proposal</h1>
+  </header>
 
-export default function MathWizz() {
-  const [type, setType] = useState("addition");
-  const [question, setQuestion] = useState("");
-  const [correctAnswer, setCorrectAnswer] = useState(null);
-  const [userAnswer, setUserAnswer] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const [score, setScore] = useState(0);
-  const [attempts, setAttempts] = useState(0);
+  <section>
+    <h2>Team Members</h2>
+    <p>Jane Doe, John Smith, Alice Johnson</p>
+  </section>
 
-  const startQuiz = () => {
-    const { question, answer } = generateQuestion(type);
-    setQuestion(question);
-    setCorrectAnswer(answer);
-    setFeedback("");
-    setUserAnswer("");
-  };
-
-  const checkAnswer = () => {
-    const isCorrect = parseInt(userAnswer) === correctAnswer;
-    setFeedback(isCorrect ? "✅ Correct!" : `❌ Oops! The correct answer was ${correctAnswer}`);
-    if (isCorrect) setScore(score + 1);
-    setAttempts(attempts + 1);
-    setTimeout(startQuiz, 2000);
-  };
-
-  return (
-    <div className="p-6 max-w-xl mx-auto text-center space-y-6">
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-bold text-blue-600"
-      >
-        MathWizz 🎓
-      </motion.h1>
-
-      <div className="flex justify-center flex-wrap gap-3">
-        {["addition", "subtraction", "multiplication", "division"].map((op) => (
-          <Button
-            key={op}
-            variant={type === op ? "default" : "outline"}
-            onClick={() => setType(op)}
-          >
-            {op.charAt(0).toUpperCase() + op.slice(1)}
-          </Button>
-        ))}
-      </div>
-
-      <Button onClick={startQuiz} className="mt-4">Start New Question</Button>
-
-      {question && (
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-        >
-          <Card className="mt-4">
-            <CardContent className="p-6 space-y-4">
-              <p className="text-2xl font-semibold">{question}</p>
-              <Input
-                type="number"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="Your answer"
-              />
-              <Button onClick={checkAnswer}>Submit</Button>
-              {feedback && <p className="text-lg font-medium mt-2">{feedback}</p>}
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
-
-      <div className="text-lg text-gray-700">
-        Score: {score} / {attempts}
-      </div>
+  <section>
+    <h2>Application Overview</h2>
+    <div class="highlight">
+      <p>MathWizz is a fun and interactive web application that allows users to test their arithmetic skills through a series of randomly generated math problems. Users can select from operations like addition, subtraction, multiplication, and division. Each response provides instant feedback and tracks the user's score in real-time.</p>
     </div>
-  );
-}
+  </section>
 
+  <section>
+    <h2>Technology Overview</h2>
+    <ul>
+      <li><strong>Languages:</strong> HTML, CSS, JavaScript, JSX</li>
+      <li><strong>Libraries:</strong> React.js, Tailwind CSS, Framer Motion</li>
+      <li><strong>Platforms:</strong> Vite, Node.js</li>
+      <li><strong>Hosting:</strong> Vercel / Netlify</li>
+    </ul>
+  </section>
 
+  <section>
+    <h2>Proposal Last Updated</h2>
+    <p><em>April 20, 2025</em></p>
+  </section>
+
+  <section>
+    <h2>Feature List</h2>
+    <ul>
+      <li>Multiple choice for addition, subtraction, multiplication, and division</li>
+      <li>Score tracking and instant feedback</li>
+      <li>Operation selection and real-time quiz generation</li>
+      <li>Responsive design for desktop and mobile</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Future Feature List</h2>
+    <ul>
+      <li>Leaderboard for global scores</li>
+      <li>User login and progress tracking</li>
+      <li>Difficulty levels and timed quizzes</li>
+      <li>Hints and explanations for incorrect answers</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Basic Technical Features</h2>
+    <ul>
+      <li>React state management with hooks</li>
+      <li>Conditional rendering</li>
+      <li>Form inputs and validation</li>
+      <li>Responsive UI with Tailwind CSS</li>
+    </ul>
+  </section>
+
+  <section>
+    <h
