@@ -1,1 +1,79 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+const generateQuestion = (type) => {
+  const a = Math.floor(Math.random() * 10) + 1;
+  const b = Math.floor(Math.random() * 10) + 1;
+  switch (type) {
+    case "addition":
+      return { question: `${a} + ${b}`, answer: a + b };
+    case "subtraction":
+      return { question: `${a} - ${b}`, answer: a - b };
+    case "multiplication":
+      return { question: `${a} × ${b}`, answer: a * b };
+    case "division":
+      return { question: `${a * b} ÷ ${b}`, answer: a };
+    default:
+      return { question: "", answer: 0 };
+  }
+};
+
+export default function MathWizz() {
+  const [type, setType] = useState("addition");
+  const [question, setQuestion] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [feedback, setFeedback] = useState("");
+
+  const startQuiz = () => {
+    const { question, answer } = generateQuestion(type);
+    setQuestion(question);
+    setCorrectAnswer(answer);
+    setFeedback("");
+    setUserAnswer("");
+  };
+
+  const checkAnswer = () => {
+    const isCorrect = parseInt(userAnswer) === correctAnswer;
+    setFeedback(isCorrect ? "Correct! 🎉" : `Oops! The answer was ${correctAnswer}`);
+  };
+
+  return (
+    <div className="p-6 max-w-md mx-auto text-center space-y-4">
+      <h1 className="text-3xl font-bold">MathWizz</h1>
+
+      <div className="flex justify-center gap-2">
+        {['addition', 'subtraction', 'multiplication', 'division'].map(op => (
+          <Button
+            key={op}
+            variant={type === op ? "default" : "outline"}
+            onClick={() => setType(op)}
+          >
+            {op.charAt(0).toUpperCase() + op.slice(1)}
+          </Button>
+        ))}
+      </div>
+
+      <Button onClick={startQuiz}>Start Quiz</Button>
+
+      {question && (
+        <Card>
+          <CardContent className="p-4">
+            <p className="text-xl mb-2">{question}</p>
+            <Input
+              type="number"
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+              placeholder="Your answer"
+            />
+            <Button onClick={checkAnswer} className="mt-2">Submit</Button>
+            {feedback && <p className="mt-2 text-lg">{feedback}</p>}
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
 
