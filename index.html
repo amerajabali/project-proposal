@@ -34,6 +34,35 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+    .quiz-section {
+      background: #ffffff;
+      border: 2px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      font-size: 1.2rem;
+    }
+    .options button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      background-color: #ecf0f1;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #d0d3d4;
+    }
+    .hidden {
+      display: none;
+    }
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -56,6 +85,18 @@
   <div class="section">
     <h2>Application Overview</h2>
     <p>SnapStudy is a fast-paced multiplayer quiz battle game that makes studying fun and competitive. Users create flashcards, challenge friends in live quiz rooms, and race to the top of the leaderboard. Study solo or in teams — SnapStudy turns learning into a game.</p>
+  </div>
+
+  <div class="section">
+    <h2>Live Demo: Try Our Quiz Game!</h2>
+    <div class="quiz-section">
+      <button id="startBtn">Start Quiz</button>
+      <div id="quizContainer" class="hidden">
+        <div class="question" id="questionText"></div>
+        <div class="options" id="optionButtons"></div>
+        <div id="resultText"></div>
+      </div>
+    </div>
   </div>
 
   <div class="section">
@@ -126,5 +167,68 @@
   <footer>
     &copy; 2025 SnapStudy Team | Product Proposal Game Edition
   </footer>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const quizContainer = document.getElementById('quizContainer');
+    const questionText = document.getElementById('questionText');
+    const optionButtons = document.getElementById('optionButtons');
+    const resultText = document.getElementById('resultText');
+
+    const questions = [
+      {
+        question: 'What does HTML stand for?',
+        options: ['Hyper Trainer Marking Language', 'HyperText Markup Language', 'HyperText Markdown Language', 'HighText Machine Language'],
+        answer: 'HyperText Markup Language'
+      },
+      {
+        question: 'Which language runs in a web browser?',
+        options: ['Java', 'C', 'Python', 'JavaScript'],
+        answer: 'JavaScript'
+      },
+      {
+        question: 'What does CSS stand for?',
+        options: ['Computer Style Sheets', 'Creative Style Sheets', 'Cascading Style Sheets', 'Colorful Style Sheets'],
+        answer: 'Cascading Style Sheets'
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    startBtn.addEventListener('click', () => {
+      startBtn.classList.add('hidden');
+      quizContainer.classList.remove('hidden');
+      loadQuestion();
+    });
+
+    function loadQuestion() {
+      resultText.textContent = '';
+      const q = questions[currentQuestion];
+      questionText.textContent = q.question;
+      optionButtons.innerHTML = '';
+      q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(option);
+        optionButtons.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentQuestion].answer;
+      if (selected === correct) {
+        resultText.textContent = '✅ Correct!';
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          setTimeout(loadQuestion, 1000);
+        } else {
+          resultText.textContent = '🎉 Quiz Complete! You did great!';
+          optionButtons.innerHTML = '';
+        }
+      } else {
+        resultText.textContent = '❌ Try again!';
+      }
+    }
+  </script>
 </body>
 </html>
